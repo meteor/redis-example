@@ -1,4 +1,4 @@
 /**
 * Models
 */
-Messages = new Meteor.Collection('messages');
+Messages = new Meteor.RedisCollection('redis');

@@ -2,7 +2,7 @@
 * Templates
 */
 Template.messages.messages = function () {
-  return Messages.find({}, { sort: { time: -1 }});
+  return Messages.matching('message:*').fetch();
 };
 
 Template.input.events = {
@@ -16,12 +16,8 @@ Template.input.events = {
       var message = document.getElementById('message');
 
       if (message.value != '') {
-        Messages.insert({
-          name: name,
-          message: message.value,
-          time: Date.now(),
-        });
-
+        var id = 'message:' + Random.id();
+        Messages.set(id, name);
         document.getElementById('message').value = '';
         message.value = '';
       }
