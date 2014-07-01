@@ -12,7 +12,7 @@ Template.input.events = {
     else
       var name = 'Anonymous';
 
-    var id = 'message:' + Random.id();
+    var id = 'message:' + new Date().getTime() + ':' + Random.id();
     var ttl = 10;
     Messages.setex(id, ttl, name);
   }
