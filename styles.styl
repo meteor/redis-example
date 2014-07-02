@@ -1,0 +1,124 @@
+@import nib
+global-reset()
+
+bgcolor = #262519
+color1 = #89A949
+color2 = #9A6643
+color3 = #50985D
+color4 = #98833E
+
+
+body
+  font-family "Helvetica Neue", Helvetica, Arial, sans-serif
+  background bgcolor
+  color #fff
+  -webkit-tap-highlight-color rgba(255,255,255,.01)
+
+.unstyled-list
+  margin-left 0
+  list-style none
+  -webkit-margin-before 0
+  -webkit-margin-after 0
+  -webkit-padding-start 0
+
+.users
+  width 100%
+  overflow hidden
+  @extend .unstyled-list
+
+.users__user, .users__add-user, .register
+  line-height 90px
+  text-align center
+  text-transform uppercase
+  background-size contain
+  font-weight bold
+  color white
+  user-select none
+  font-size 48px
+  letter-spacing 3px
+  padding 3% 0 
+  &:nth-child(3n+1)
+    background: color1
+  &:nth-child(3n+2)
+    background: color2
+  &:nth-child(3n+3)
+    background: color3
+  &:nth-child(3n+4)
+    background: color4
+  transition all 200ms ease-in-out
+
+.users__user, .users__add-user
+  //animation elementAppears 300ms forwards ease-in-out
+  // animation-iteration-count 1
+
+.users__user:active
+  transform scale3d(.9, .9, 1);
+
+.users__add-user, .register
+  position: relative
+  input[type='submit']
+    display: none
+  #friend-username, #register-username
+    width 100%
+    display block
+    line-height 90px
+    font-size 48px
+    letter-spacing 3px
+    width 100%
+    border 0
+    font-family "Helvetica Neue", Helvetica, Arial, sans-serif
+    font-weight bold
+    text-align center
+    color #fff
+    background none
+    transition all 300ms ease-in-out
+    &::-webkit-input-placeholder
+      color #fff
+
+.debug
+  text-align center
+  margin-top 50px
+  font-size 20px
+  line-height 32px
+  color rgba(255, 255, 255, .1)
+  li
+    animation debugAppear 800ms forwards ease-in-out
+  li:nth-child(1)
+    color rgba(255, 255, 255, .8)
+  li:nth-child(2)
+    color rgba(255, 255, 255, .4)
+  li:nth-child(3)
+    color rgba(255, 255, 255, .3)
+  li:nth-child(4)
+    color rgba(255, 255, 255, .2)
+  li:nth-child(n+6)
+    display none
+
+@keyframes elementAppears
+  0%
+    transform: translate3d(0, -100%, 0)
+  100%
+    transform: translate3d(0, 0, 0)
+
+@keyframes elementTriggered
+  0%, 100%
+    transform: scale3d(1, 1, 1)
+  50% 
+    transform: scale3d(0.9, 0.9, 1)
+
+@keyframes debugAppear
+  0%
+    opacity 0
+    transform translate3d(0, 5px, 0)
+  100%
+    opacity 1
+    transform translate3d(0, 0, 0)
+
+
+@media (max-width: 600px)
+  .users__user, .users__add-user, .register
+    font-size 30px
+  .users__add-user, .register
+    #friend-username, #register-username
+      font-size 20px
+

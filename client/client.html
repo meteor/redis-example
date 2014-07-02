@@ -1,22 +1,70 @@
 <head>
-  <title>Chat app</title>
+  <title>yodor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
+  <link rel="apple-touch-icon" sizes="120x120" href="public/icon-120.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="public/icon-152.png" />
 </head>
- 
-<body>
-   <h1>Chatapp</h1>
-    Enter your name: <input id="username" value="Anonymous Coward" />
-    <br/>
-  {{> input }}
-  {{> messages }}
-</body>
- 
 
-<template name="messages">
-  {{#each messages}}
-    <strong>{{value}}</strong> says <strong>Yo</strong><br>
+<body>
+  {{#if loggedIn}}
+    {{> friendsList}}
+    {{> yodors}}
+  {{else}}
+    {{#if loggingIn}}
+      …
+    {{else}}
+      {{> registerForm}}
+    {{/if}}
+  {{/if}}
+
+  <!-- {{> everyone}} -->
+</body>
+
+<template name='friendsList'>
+  <ul class="users">
+  {{#each friends}}
+    {{> friend}}
   {{/each}}
+  {{> addFriend}}
+  </ul>
 </template>
 
-<template name="input">
-  <button id="sendyo">Say Yo</button>
+<template name='friend'>
+  <li class="users__user"><strong>{{username}}</strong> {{count}}</li>
+</template>
+
+<template name='addFriend'>
+  <li class="users__add-user">
+  <form id='friend-form' action='action'>
+    <input type='text' id='friend-username' placeholder='FIND USERNAME TO ADD'>
+    <input type='submit' id='friend-button' value='Go'>
+  </form>
+  </li>
+</template>
+
+<template name='everyone'>
+  <h4>All users</h4>
+  <ul class="users">
+    {{#each users}}
+      <li class="users__user">{{username}}</li>
+    {{/each}}
+  </ul>
+</template>
+
+<template name='yodors'>
+  <ul class="debug">
+    {{#each yodors}}
+      <li><strong>YO</strong> from {{username}}</li>
+    {{/each}}
+  </ul>
+</template>
+
+<template name='registerForm'>
+  <div class='register'>
+    <form id='register-form' action='action'>
+      <input type='text' id='register-username' placeholder='CHOOSE YOUR USERNAME'>
+      <input type='submit' id='register-button' value='Go'>
+    </form>
+  </div>
 </template>

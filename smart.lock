@@ -1,0 +1,20 @@
+{
+  "meteor": {},
+  "dependencies": {
+    "basePackages": {
+      "redis-livedata": {}
+    },
+    "packages": {
+      "redis-livedata": {
+        "git": "https://github.com/meteor/redis-livedata.git",
+        "tag": "v0.0.5",
+        "commit": "f740b502a834919211539858675ad90c835578db"
+      },
+      "miniredis": {
+        "git": "https://github.com/meteor/miniredis.git",
+        "tag": "v0.0.3",
+        "commit": "ae058b0cc468dab6e3030d8bc1cbbea6ecbe3dab"
+      }
+    }
+  }
+}
