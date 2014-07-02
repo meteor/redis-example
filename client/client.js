@@ -7,11 +7,10 @@ Template.messages.messages = function () {
 
 Template.input.events = {
   'click button#sendyo' : function (event) {
-    if (Meteor.user())
-      var name = Meteor.user().profile.name;
-    else
-      var name = 'Anonymous';
-
+    var name = document.getElementById('username').value;
+    if (!name) {
+      name = 'Anonymous Coward';
+    }
     var id = 'message:' + new Date().getTime() + ':' + Random.id();
     var ttl = 10;
     Messages.setex(id, ttl, name);

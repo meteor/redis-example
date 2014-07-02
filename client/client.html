@@ -3,22 +3,17 @@
 </head>
  
 <body>
- {{> loginButtons align="right"}}<br>
    <h1>Chatapp</h1>
-  {{> welcome }}
+    Enter your name: <input id="username" value="Anonymous Coward" />
+    <br/>
   {{> input }}
   {{> messages }}
 </body>
  
-<template name="welcome">
-  <p>
-    Welcome to the example chat app! Please log in to show your username.
-  </p>
-</template>
 
 <template name="messages">
   {{#each messages}}
-    <strong>{{value}}:</strong> Yo<br>
+    <strong>{{value}}</strong> says <strong>Yo</strong><br>
   {{/each}}
 </template>
 
