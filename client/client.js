@@ -11,7 +11,7 @@ Template.input.events = {
     if (!name) {
       name = 'Anonymous Coward';
     }
-    var id = 'message:' + new Date().getTime() + ':' + Random.id();
+    var id = 'message:' + (10000000000000 - new Date().getTime()) + ':' + Random.id();
     var ttl = 10;
     Messages.setex(id, ttl, name);
   }
