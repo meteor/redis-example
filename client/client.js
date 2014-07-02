@@ -2,7 +2,7 @@
 * Templates
 */
 Template.messages.messages = function () {
-  return Messages.matching('message:*').fetch();
+  return Messages.matching('message:*');
 };
 
 Template.input.events = {
