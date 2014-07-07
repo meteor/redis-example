@@ -1,22 +1,3 @@
-/**
-* Templates
-Template.messages.messages = function () {
-  return Messages.matching('message:*');
-};
-
-Template.input.events = {
-  'click button#sendyo' : function (event) {
-    var name = document.getElementById('username').value;
-    if (!name) {
-      name = 'Anonymous Coward';
-    }
-    var id = 'message:' + (10000000000000 - new Date().getTime()) + ':' + Random.id();
-    var ttl = 10;
-    Messages.setex(id, ttl, name);
-  }
-}
-*/
-
 Session.setDefault('username', null); // start by no name
 
 Template.friendsList.friends = function() {
@@ -31,7 +12,7 @@ Template.friend.events({
 
     var ts = (10000000000000 - new Date);
     var toUser = this.value;
-    var ttl = 10; // 10 seconds
+    var ttl = 20; // 10 seconds
     Redis.setex("yo::" + ts + "::" + toUser + "::" + user, ttl, "yo");
   }
 });
@@ -78,16 +59,29 @@ Template.friend.username = function () {
   return id ? id.split("::")[2] : "";
 };
 
-Template.yodors.yodors = function() {
+Template.yodors.yodors = function () {
   var user = Session.get("username");
   if (! user) return;
 
   return Redis.matching("yo::*::" + user + "::*");
 };
 
-Template.yodors.username = function() {
+Template.yodors.username = function () {
   var id = this._id;
   return id ? id.split("::")[3] : "";
+};
+
+Template.yodors.rendered = function () {
+  $('.debug')[0]._uihooks = {
+    insertElement: function (node, next) {
+      $('.debug li').addClass('shift-down');
+      $(node).addClass('pop-in').insertBefore(next);
+      setTimeout(function () {
+        $('.debug li').removeClass('shift-down');
+        $(node).removeClass('pop-in');
+      }, 230);
+    }
+  };
 };
 
 Template.registerForm.events({
