@@ -12,7 +12,7 @@ Template.friend.events({
 
     var ts = (10000000000000 - new Date);
     var toUser = this.value;
-    var ttl = 20; // 10 seconds
+    var ttl = 10; // 10 seconds
     Redis.setex("yo::" + ts + "::" + toUser + "::" + user, ttl, "yo");
   }
 });
@@ -106,14 +106,23 @@ Meteor.startup(function () {
   notifyUser("", true);
   var user = Session.get("username");
   if (! user) return;
+
+  var yos = {};
   Redis.matching("yo::*::" + user + "::*").observe({
     added: function (doc) {
-      notifyUser("YO from " + doc._id.split("::")[3]);
+      yos[doc._id] = notifyUser("YO from " + doc._id.split("::")[3]);
+    },
+    removed: function (doc) {
+      if (yos[doc._id]) {
+        yos[doc._id].close();
+        delete yos[doc._id];
+      }
     }
   });
 });
 
 function notifyUser(notificationText, fake) {
+  var options = { icon: "http://i.imgur.com/3PGZObx.png" };
   // Let's check if the browser supports notifications
   if (!("Notification" in window)) {
     return;
@@ -123,7 +132,7 @@ function notifyUser(notificationText, fake) {
   else if (Notification.permission === "granted") {
     if (fake) return;
     // If it's okay let's create a notification
-    var notification = new Notification(notificationText);
+    return new Notification(notificationText, options);
   }
 
   // Otherwise, we need to ask the user for permission
@@ -140,7 +149,7 @@ function notifyUser(notificationText, fake) {
       // If the user is okay, let's create a notification
       if (permission === "granted") {
         if (fake) return;
-        var notification = new Notification(notificationText);
+        return new Notification(notificationText, options);
       }
     });
   }
