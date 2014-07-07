@@ -6,7 +6,7 @@ Template.friendsList.friends = function() {
 };
 
 Template.friend.events({
-  'click li': function () {
+  'tap .user': function () {
     var user = Session.get('username');
     if (! user) return;
 
@@ -14,8 +14,32 @@ Template.friend.events({
     var toUser = this.value;
     var ttl = 10; // 10 seconds
     Redis.setex('yo::' + ts + '::' + toUser + '::' + user, ttl, 'yo');
+  },
+  'tap .user-buttons': function () {
+    var user = Session.get('username');
+    var toUser = this.value;
+    Redis.del('friends::' + user + '::' + toUser);
+  },
+  'swipeleft li': function (e) {
+    return performSwipeAnimation(e, 'swiped-left');
+  },
+  'swiperight li': function (e) {
+    return performSwipeAnimation(e, 'swiped-right');
   }
 });
+
+function performSwipeAnimation (e, swipedClass) {
+  function performOnNode (node) {
+    node
+      .removeClass('swiped-left')
+      .removeClass('swiped-right')
+      .addClass(swipedClass);
+  }
+  performOnNode($(e.currentTarget).find('.user'));
+  performOnNode($(e.currentTarget).find('.user-buttons'));
+  e.preventDefault();
+  return false;
+}
 
 Template.addFriend.events({
   'submit form': function(event, template) {
