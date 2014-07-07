@@ -1,9 +1,9 @@
 <head>
   <title>yodor</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
-  <link rel="apple-touch-icon" sizes="120x120" href="public/icon-120.png" />
-  <link rel="apple-touch-icon" sizes="152x152" href="public/icon-152.png" />
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, minimal-ui' />
+  <link rel='apple-touch-icon' sizes='120x120' href='public/icon-120.png' />
+  <link rel='apple-touch-icon' sizes='152x152' href='public/icon-152.png' />
 </head>
 
 <body>
@@ -16,7 +16,7 @@
 </body>
 
 <template name='friendsList'>
-  <ul class="users">
+  <ul class='users'>
   {{#each friends}}
     {{> friend}}
   {{/each}}
@@ -25,11 +25,14 @@
 </template>
 
 <template name='friend'>
-  <li class="users__user"><strong>{{username}}</strong> {{count}}</li>
+  <li class='user-panel'>
+    <div class='user'><strong>{{username}}</strong> {{count}}</div>
+    <div></div>
+  </li>
 </template>
 
 <template name='addFriend'>
-  <li class="users__add-user">
+  <li class='add-user'>
   <form id='friend-form' action='action'>
     <input type='text' id='friend-username' placeholder='FIND USERNAME TO ADD'>
     <input type='submit' id='friend-button' value='Go'>
@@ -38,7 +41,7 @@
 </template>
 
 <template name='yodors'>
-  <ul class="debug">
+  <ul class='debug'>
     {{#each yodors}}
       <li><strong>YO</strong> from {{username}}</li>
     {{/each}}

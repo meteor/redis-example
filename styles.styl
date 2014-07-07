@@ -26,7 +26,7 @@ body
   overflow hidden
   @extend .unstyled-list
 
-.users__user, .users__add-user, .register
+.user-panel, .add-user, .register
   line-height 90px
   text-align center
   text-transform uppercase
@@ -47,14 +47,14 @@ body
     background: color4
   transition all 200ms ease-in-out
 
-.users__user, .users__add-user
+.user-panel, .add-user
   //animation elementAppears 300ms forwards ease-in-out
   // animation-iteration-count 1
 
-.users__user:active
+.user-panel:active
   transform scale3d(.9, .9, 1);
 
-.users__add-user, .register
+.add-user, .register
   position: relative
   input[type='submit']
     display: none
@@ -124,9 +124,9 @@ body
 
 
 @media (max-width: 600px)
-  .users__user, .users__add-user, .register
+  .user-panel, .add-user, .register
     font-size 30px
-  .users__add-user, .register
+  .add-user, .register
     #friend-username, #register-username
       font-size 20px
 
