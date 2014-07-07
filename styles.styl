@@ -27,7 +27,6 @@ body
   @extend .unstyled-list
 
 .user-panel, .add-user, .register
-  line-height 90px
   text-align center
   text-transform uppercase
   background-size contain
@@ -36,28 +35,49 @@ body
   user-select none
   font-size 48px
   letter-spacing 3px
-  padding 3% 0
   &:nth-child(3n+1)
-    background: color1
+    background color1
   &:nth-child(3n+2)
-    background: color2
+    background color2
   &:nth-child(3n+3)
-    background: color3
+    background color3
   &:nth-child(3n+4)
-    background: color4
+    background color4
   transition all 200ms ease-in-out
 
-.user-panel, .add-user
-  //animation elementAppears 300ms forwards ease-in-out
-  // animation-iteration-count 1
+.user-panel
+  .user-buttons
+    margin-top -150px
+    margin-left 100%
+
+  .user-buttons.swiped-left
+    animation swipedLeftOdd 100ms forwards linear
+
+  .user-buttons.swiped-right
+    animation swipedRightOdd 100ms forwards linear
+
+  .user.swiped-left
+    animation swipedLeftNormal 100ms forwards linear
+
+  .user.swiped-right
+    animation swipedRightNormal 100ms forwards linear
+
+.user, .user-buttons, .add-user
+  height 150px
+  line-height 150px
+  width 100%
+
+#friend-form
+  padding-top 20px
+
 
 .user-panel:active
   transform scale3d(.9, .9, 1);
 
 .add-user, .register
-  position: relative
+  position relative
   input[type='submit']
-    display: none
+    display none
   #friend-username, #register-username
     width 100%
     display block
@@ -97,18 +117,6 @@ body
   animation debugShift 200ms forwards ease-in-out
 .pop-in
   animation debugAppear 200ms forwards ease-in-out
-
-@keyframes elementAppears
-  0%
-    transform: translate3d(0, -100%, 0)
-  100%
-    transform: translate3d(0, 0, 0)
-
-@keyframes elementTriggered
-  0%, 100%
-    transform: scale3d(1, 1, 1)
-  50%
-    transform: scale3d(0.9, 0.9, 1)
 
 @keyframes debugAppear
   0%
