@@ -3,22 +3,17 @@ Meteor.startup(function () {
   var user = Session.get("username");
   if (! user) return;
 
-  var yos = {};
   Redis.matching("yo::*::" + user + "::*").observe({
     added: function (doc) {
-      yos[doc._id] = notifyUser("YO from " + doc._id.split("::")[3]);
-    },
-    removed: function (doc) {
-      if (yos[doc._id]) {
-        yos[doc._id].close();
-        delete yos[doc._id];
-      }
+      notifyUser("YO from " + doc._id.split("::")[3]);
     }
   });
 });
 
 function notifyUser(notificationText, fake) {
   var options = { icon: "http://i.imgur.com/3PGZObx.png" };
+  var notification = null;
+
   // Let's check if the browser supports notifications
   if (!("Notification" in window)) {
     return;
@@ -28,7 +23,7 @@ function notifyUser(notificationText, fake) {
   else if (Notification.permission === "granted") {
     if (fake) return;
     // If it's okay let's create a notification
-    return new Notification(notificationText, options);
+    notification = new Notification(notificationText, options);
   }
 
   // Otherwise, we need to ask the user for permission
@@ -45,12 +40,16 @@ function notifyUser(notificationText, fake) {
       // If the user is okay, let's create a notification
       if (permission === "granted") {
         if (fake) return;
-        return new Notification(notificationText, options);
+        notification = new Notification(notificationText, options);
       }
     });
   }
 
   // At last, if the user already denied any notification, and you
   // want to be respectful there is no need to bother him any more.
+
+  // Clean up the notification after a short period of time
+  // XXX too little?
+  notification && setTimeout(function () { notification.close(); }, 5 * 1000);
 }
 

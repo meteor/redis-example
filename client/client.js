@@ -53,8 +53,7 @@ Template.addFriend.events({
     if (newFriend) {
       addUserToFriends(newFriend);
     } else {
-      // TODO: nice notification
-      alert('No such user!');
+      notifyUser("No such user");
     }
 
     return false;
