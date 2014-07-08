@@ -25,26 +25,3 @@ Redis.allow({
   }
 });
 
-if (Meteor.isServer) {
-  Meteor.publish('friends', function (user) {
-    if (! user || user.indexOf('::') !== -1) return [];
-    return Redis.matching('friends::' + user + '::*');
-  });
-  Meteor.publish('yos-for-me', function (user) {
-    if (! user || user.indexOf('::') !== -1) return [];
-    return Redis.matching('yo::*::' + user + '::*');
-  });
-  Meteor.publish('yos-from-me', function (user) {
-    if (! user || user.indexOf('::') !== -1) return [];
-    return Redis.matching('yo::*::*::' + user);
-  });
-} else {
-  Deps.autorun(function () {
-    var user = Session.get('username');
-    if (! user) return;
-    Meteor.subscribe('friends', user);
-    Meteor.subscribe('yos-from-me', user);
-    Meteor.subscribe('yos-for-me', user);
-  });
-}
-
