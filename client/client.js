@@ -46,15 +46,10 @@ Template.addFriend.events({
     event.preventDefault();
     var usernameField = template.find('#friend-username')
     var username = usernameField.value.trim().toLowerCase();
-    var newFriend = Redis.get('user::' + username);
 
     usernameField.value = '';
 
-    if (newFriend) {
-      addUserToFriends(newFriend);
-    } else {
-      notifyUser("No such user");
-    }
+    addUserToFriends(username);
 
     return false;
   }
