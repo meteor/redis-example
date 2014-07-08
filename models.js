@@ -12,14 +12,14 @@ Redis = new Meteor.RedisCollection('redis');
 
 Redis.allow({
   exec: function (userId, command, args) {
-    if (! _.contains(['set', 'setex'], command))
+    if (! _.contains(['set', 'setex', 'del'], command))
       return false;
     var keyDecomposed = args[0].split('::');
-    if (keyDecomposed.length === 4 && keyDecomposed[0] === 'yo')
+    if (command !== 'del' && keyDecomposed.length === 4 && keyDecomposed[0] === 'yo')
       return true;
     if (keyDecomposed.length === 3 && keyDecomposed[0] === 'friends')
       return true;
-    if (keyDecomposed.length === 2 && keyDecomposed[0] === 'user')
+    if (command !== 'del' && keyDecomposed.length === 2 && keyDecomposed[0] === 'user')
       return true;
     return false;
   }
