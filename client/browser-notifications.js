@@ -1,26 +1,26 @@
 Meteor.startup(function () {
-  notifyUser("", true);
-  var user = Session.get("username");
+  notifyUser('', true);
+  var user = Session.get('username');
   if (! user) return;
 
-  Redis.matching("yo::*::" + user + "::*").observe({
+  Redis.matching('yo::*::' + user + '::*').observe({
     added: function (doc) {
-      notifyUser("YO from " + doc._id.split("::")[3]);
+      notifyUser('YO from ' + doc._id.split('::')[3]);
     }
   });
 });
 
-function notifyUser(notificationText, fake) {
-  var options = { icon: "http://i.imgur.com/3PGZObx.png" };
+notifyUser = function (notificationText, fake) {
+  var options = { icon: 'http://i.imgur.com/3PGZObx.png' };
   var notification = null;
 
   // Let's check if the browser supports notifications
-  if (!("Notification" in window)) {
+  if (!('Notification' in window)) {
     return;
   }
 
   // Let's check if the user is okay to get some notification
-  else if (Notification.permission === "granted") {
+  else if (Notification.permission === 'granted') {
     if (fake) return;
     // If it's okay let's create a notification
     notification = new Notification(notificationText, options);
@@ -38,7 +38,7 @@ function notifyUser(notificationText, fake) {
       }
 
       // If the user is okay, let's create a notification
-      if (permission === "granted") {
+      if (permission === 'granted') {
         if (fake) return;
         notification = new Notification(notificationText, options);
       }

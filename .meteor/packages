@@ -7,5 +7,3 @@ standard-app-packages
 redis-livedata
 miniredis
 stylus
-insecure
-autopublish
