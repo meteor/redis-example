@@ -62,6 +62,7 @@ function addUserToFriends(newUserId) {
   if (! Redis.get('friends::' + user + '::' + newUserId)) {
     Redis.set('friends::' + user + '::' + newUserId, newUserId);
   }
+
 }
 
 Template.friend.count = function () {
@@ -101,9 +102,9 @@ Template.registerForm.events({
   }
 });
 
-UI.body.loggedIn = function () {
+UI.registerHelper('loggedIn', function() {
   return Session.get('username') ? true : false;
-};
+});
 
 document.addEventListener('touchstart', function(){}, true);
 
